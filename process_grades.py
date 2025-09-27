@@ -154,6 +154,7 @@ DC-05:
   Observación: promedio general mal calculado.
 
 """
+"""
 if __name__ == "__main__":
     # PATH COVERAGE
     
@@ -185,7 +186,7 @@ if __name__ == "__main__":
     print("\nFinal processing result (PC-03):")
     print(result)
 
-
+"""
 """
 =========================================
 Prueba: Path Coverage (PC-01 a PC-03)
@@ -218,3 +219,20 @@ PC-03:
   Observación: bug por no manejar lista vacía.
 =========================================
 """
+
+if __name__ == "__main__":
+    students = [
+        {'name': 'Ana',   'grades': [80, 90, 85]},  # aprobado
+        {'name': 'Luis',  'grades': [70, 70, 70]},  # frontera 70 (debería aprobar)
+        {'name': 'Jorge', 'grades': None},          # CORREGIDO: antes [] (no entraba al if),
+                                                    # ahora None para cubrir `if grades == None`
+        {'name': 'Marta', 'grades': [40, 45, 50]}   # reprobado
+    ]
+
+    result = process_grades(students)
+    print("\nFinal processing result (SC-01 corregido):")
+    print(result)
+
+# Reejecución de SC-01:
+# Mini corrección: cambié Jorge de [] a None para cubrir la sentencia del `if grades == None`
+# y asegurar la cobertura de sentencias. El caso con [] se documenta como SC-02 (negativo).
