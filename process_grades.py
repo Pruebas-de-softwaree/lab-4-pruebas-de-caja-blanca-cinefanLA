@@ -73,7 +73,7 @@ Observaciones:
 - El promedio general no se calculó porque counter está comentado.
 
 """
-
+"""
 if __name__ == "__main__":
     # ---- DECISION COVERAGE test ----
     
@@ -117,7 +117,7 @@ if __name__ == "__main__":
     result = process_grades(students)
     print("\nFinal processing result (DC-05):")
     print(result)
-
+"""
 
 """
 Prueba: Decision Coverage (DC-01 a DC-05)
@@ -153,4 +153,68 @@ DC-05:
   Obtenido: {'passed': [], 'failed': [], 'overall_average': 0.0}
   Observación: promedio general mal calculado.
 
+"""
+if __name__ == "__main__":
+    # PATH COVERAGE
+    
+    # PC-01: Recorre todos los caminos (P1, P2, P3, P4) con counter>0 True
+    students = [
+        {'name': 'N1', 'grades': None},          # P1 → sin notas
+        {'name': 'N2', 'grades': [90, 90, 90]},  # P2 → aprobado
+        {'name': 'N3', 'grades': [60, 60, 60]},  # P3 → recuperación
+        {'name': 'N4', 'grades': [30, 40, 35]}   # P4 → reprobado
+    ]
+    result = process_grades(students)
+    print("\nFinal processing result (PC-01):")
+    print(result)
+
+    # PC-02: counter>0 False (todos con None)
+    students = [
+        {'name': 'S1', 'grades': None},
+        {'name': 'S2', 'grades': None}
+    ]
+    result = process_grades(students)
+    print("\nFinal processing result (PC-02):")
+    print(result)
+
+    # PC-03: Caso negativo con lista vacía (ZeroDivisionError)
+    students = [
+        {'name': 'X', 'grades': []}
+    ]
+    result = process_grades(students)
+    print("\nFinal processing result (PC-03):")
+    print(result)
+
+
+"""
+=========================================
+Prueba: Path Coverage (PC-01 a PC-03)
+-----------------------------------------
+
+PC-01:
+  Entrada: N1=None, N2=[90,90,90], N3=[60,60,60], N4=[30,40,35]
+  Esperado:
+    Consola: "Student N1 has no grades", "N3 is in recovery"
+    Resultado: {'passed':['N2'],'failed':['N4'],'overall_average':61.67}
+  Obtenido:
+    Consola igual
+    Resultado: {'passed':['N2'],'failed':['N4'],'overall_average':0.0}
+  Observación: bug en promedio general.
+
+PC-02:
+  Entrada: S1=None, S2=None
+  Esperado:
+    Consola: "Student S1 has no grades", "Student S2 has no grades"
+    Resultado: {'passed':[],'failed':[],'overall_average':0.0}
+  Obtenido:
+    Igual al esperado.
+
+PC-03:
+  Entrada: X=[]
+  Esperado:
+    Mensaje "Student X has no grades", resultado vacío con promedio 0.0
+  Obtenido:
+    Excepción ZeroDivisionError: division by zero
+  Observación: bug por no manejar lista vacía.
+=========================================
 """
